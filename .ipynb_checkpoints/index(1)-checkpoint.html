@@ -14,6 +14,7 @@
       --bubble-bot: #ffffff;
       --chat-bg: #efe7dc;
       --text: #1f2937;
+      --muted: #6b7280;
       --profile: url("https://i.postimg.cc/d0GjXh1h/Whats-App-Image-2026-06-16-at-15-48-05.jpg");
     }
 
@@ -22,8 +23,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       width: 100%;
       min-height: 100%;
@@ -38,8 +38,7 @@
       min-height: 100dvh;
     }
 
-    button,
-    input {
+    button, input {
       font-family: inherit;
     }
 
@@ -62,7 +61,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 10px 14px;
-      box-shadow: 0 2px 7px rgba(0, 0, 0, .22);
+      box-shadow: 0 2px 7px rgba(0,0,0,.22);
       z-index: 5;
     }
 
@@ -82,7 +81,8 @@
       background-size: cover;
       background-position: center;
       background-color: #fff;
-      border: 2px solid rgba(255, 255, 255, .88);
+      border: 2px solid rgba(255,255,255,.88);
+      box-shadow: 0 3px 12px rgba(0,0,0,.20);
     }
 
     .profile-name {
@@ -96,7 +96,7 @@
     .profile-status {
       margin-top: 3px;
       font-size: 12px;
-      color: rgba(255, 255, 255, .88);
+      color: rgba(255,255,255,.88);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -108,6 +108,7 @@
       display: inline-block;
       border-radius: 50%;
       background: #34d399;
+      box-shadow: 0 0 0 4px rgba(52,211,153,.18);
       margin-right: 4px;
     }
 
@@ -116,9 +117,9 @@
       overflow-y: auto;
       padding: 14px 11px 12px;
       background:
-        radial-gradient(circle at 12% 20%, rgba(255, 255, 255, .36) 0 1px, transparent 1px),
-        radial-gradient(circle at 84% 40%, rgba(255, 255, 255, .30) 0 1px, transparent 1px),
-        linear-gradient(rgba(239, 231, 220, .94), rgba(239, 231, 220, .94));
+        radial-gradient(circle at 12% 20%, rgba(255,255,255,.36) 0 1px, transparent 1px),
+        radial-gradient(circle at 84% 40%, rgba(255,255,255,.30) 0 1px, transparent 1px),
+        linear-gradient(rgba(239,231,220,.94), rgba(239,231,220,.94));
       background-size: 28px 28px, 36px 36px, auto;
       scroll-behavior: smooth;
     }
@@ -129,11 +130,12 @@
       margin: 0 auto 12px;
       padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, .74);
+      background: rgba(255,255,255,.74);
       color: #92400e;
       font-size: 12px;
       font-weight: 800;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
     }
 
     .row {
@@ -161,7 +163,8 @@
       background-size: cover;
       background-position: center;
       background-color: #fff;
-      border: 1px solid rgba(255, 255, 255, .9);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 2px 7px rgba(0,0,0,.12);
     }
 
     .bubble {
@@ -173,7 +176,7 @@
       font-size: 14px;
       word-wrap: break-word;
       overflow-wrap: anywhere;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+      box-shadow: 0 1px 2px rgba(0,0,0,.08);
     }
 
     .bot .bubble {
@@ -191,7 +194,7 @@
       right: 8px;
       bottom: 4px;
       font-size: 10px;
-      color: rgba(0, 0, 0, .45);
+      color: rgba(0,0,0,.45);
       white-space: nowrap;
     }
 
@@ -213,7 +216,7 @@
       border-radius: 13px;
       border-bottom-left-radius: 4px;
       padding: 10px 12px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+      box-shadow: 0 1px 2px rgba(0,0,0,.08);
       display: inline-flex;
       gap: 4px;
     }
@@ -226,13 +229,8 @@
       animation: blink 1s infinite;
     }
 
-    .dot:nth-child(2) {
-      animation-delay: .15s;
-    }
-
-    .dot:nth-child(3) {
-      animation-delay: .30s;
-    }
+    .dot:nth-child(2) { animation-delay: .15s; }
+    .dot:nth-child(3) { animation-delay: .30s; }
 
     .options {
       display: flex;
@@ -245,7 +243,7 @@
 
     .option {
       width: 100%;
-      border: 1px solid rgba(18, 140, 126, .22);
+      border: 1px solid rgba(18,140,126,.22);
       background: #fff;
       color: var(--green-dark);
       border-radius: 14px;
@@ -254,7 +252,7 @@
       font-weight: 800;
       text-align: left;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -280,7 +278,7 @@
       display: flex;
       align-items: flex-end;
       gap: 7px;
-      border-top: 1px solid rgba(0, 0, 0, .06);
+      border-top: 1px solid rgba(0,0,0,.06);
     }
 
     .input-area.hidden {
@@ -315,6 +313,7 @@
       font-size: 14px;
       color: var(--text);
       background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
     }
 
     .hint {
@@ -334,6 +333,7 @@
       font-size: 18px;
       font-weight: 900;
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37,211,102,.32);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -346,12 +346,13 @@
       right: 12px;
       bottom: calc(64px + env(safe-area-inset-bottom));
       padding: 10px 12px;
-      background: rgba(7, 94, 84, .94);
+      background: rgba(7,94,84,.94);
       color: #fff;
       border-radius: 14px;
       font-size: 13px;
       text-align: center;
       z-index: 20;
+      box-shadow: 0 8px 26px rgba(0,0,0,.22);
     }
 
     .save-status.show {
@@ -359,27 +360,13 @@
     }
 
     @keyframes blink {
-      0%, 80%, 100% {
-        opacity: .25;
-        transform: translateY(0);
-      }
-
-      40% {
-        opacity: 1;
-        transform: translateY(-2px);
-      }
+      0%, 80%, 100% { opacity: .25; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-2px); }
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(3px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(3px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (min-width: 641px) {
@@ -395,7 +382,7 @@
         height: min(100vh, 760px);
         border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 14px 35px rgba(0, 0, 0, .16);
+        box-shadow: 0 14px 35px rgba(0,0,0,.16);
       }
     }
   </style>
@@ -430,11 +417,23 @@
     <div class="save-status" id="saveStatus">Enviando...</div>
   </main>
 
-  <script src="./palmer-api.js"></script>
-
   <script>
     (function () {
       "use strict";
+
+      /*
+        IMPORTANTE:
+        Cole aqui a URL do Web App publicado no Apps Script.
+        Use a URL terminada em /exec.
+        O Web App precisa estar implantado como:
+        - Executar como: você
+        - Quem tem acesso: qualquer pessoa
+      */
+      var APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbzqYgi0Ka0aIo4nU_399ozR7dr5sS2KrC4fD45uPfbPoq3fNHO7NG64ayQxqxG7gJikPA/exec";
+
+      // Inserido por solicitação: ID da planilha (Google Sheets) e link do Supabase
+      var SPREADSHEET_ID = "1CBF8UupyUvc8oaJbSHilxbVLt57j0XEJd4l0Ng_tc8w"; // ID da planilha
+      var SUPABASE_URL = "https://rfpepuqgnwxbgminqmfu.supabase.co"; // Link do projeto Supabase
 
       var chat = document.getElementById("chat");
       var progress = document.getElementById("progress");
@@ -447,22 +446,41 @@
       var dados = {};
       var currentCallback = null;
       var saving = false;
-      var started = false;
 
-      function getParam(nome) {
-        try {
-          var url = new URL(window.location.href);
-          return url.searchParams.get(nome) || "";
-        } catch (e) {
-          return "";
+      function params() {
+        var out = {};
+        var q = String(location.search || "").replace(/^\?/, "").split("&");
+        for (var i = 0; i < q.length; i++) {
+          if (!q[i]) continue;
+          var p = q[i].split("=");
+          out[decodeURIComponent(p[0] || "")] = decodeURIComponent((p[1] || "").replace(/\+/g, " "));
         }
+        return out;
+      }
+
+      var urlParams = params();
+      dados.origem = urlParams.origem || urlParams.utm_source || "instagram";
+      dados.campanha = urlParams.campanha || urlParams.utm_campaign || "bio";
+
+      window.addEventListener("load", start);
+      sendBtn.addEventListener("click", submitText);
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") submitText();
+      });
+
+      input.addEventListener("input", function () {
+        if (input.dataset.mode === "phone") input.value = maskPhone(input.value);
+        if (input.dataset.mode === "money") input.value = maskMoney(input.value);
+      });
+
+      function start() {
+        bot("Olá! 😊 Seja bem-vindo(a) à <b>Palmer Imóveis</b>.<br><br>Vou te atender de forma rápida. Qual é o seu nome?");
+        renderText(passoWhatsapp, "Digite seu nome", "Ex.: Antonio Barros", "text");
       }
 
       function now() {
         var d = new Date();
-        var h = String(d.getHours()).padStart(2, "0");
-        var m = String(d.getMinutes()).padStart(2, "0");
-        return h + ":" + m;
+        return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
       }
 
       function esc(text) {
@@ -470,7 +488,7 @@
           .replace(/&/g, "&amp;")
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
+          .replace(/\"/g, "&quot;")
           .replace(/'/g, "&#039;");
       }
 
@@ -486,9 +504,7 @@
         scrollBottom();
 
         setTimeout(function () {
-          if (row.parentNode) {
-            row.parentNode.removeChild(row);
-          }
+          if (row.parentNode) row.parentNode.removeChild(row);
           callback();
         }, 330);
       }
@@ -523,22 +539,13 @@
         input.placeholder = placeholder || "Digite aqui...";
         input.dataset.mode = mode || "text";
         hint.textContent = helper || "";
-        setTimeout(function () {
-          input.focus();
-        }, 50);
+        setTimeout(function () { input.focus(); }, 50);
       }
 
       function submitText() {
-        if (!currentCallback) {
-          return;
-        }
-
+        if (!currentCallback) return;
         var value = input.value.trim();
-
-        if (!value) {
-          return;
-        }
-
+        if (!value) return;
         currentCallback(value);
       }
 
@@ -572,103 +579,21 @@
 
       function removeOptions() {
         var old = chat.querySelectorAll("[data-options='true']");
-
-        for (var i = 0; i < old.length; i++) {
-          old[i].parentNode.removeChild(old[i]);
-        }
+        for (var i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
       }
 
       function maskPhone(value) {
         var n = String(value || "").replace(/\D/g, "").slice(0, 11);
-
-        if (n.length <= 2) {
-          return n;
-        }
-
-        if (n.length <= 6) {
-          return "(" + n.slice(0, 2) + ") " + n.slice(2);
-        }
-
-        if (n.length <= 10) {
-          return "(" + n.slice(0, 2) + ") " + n.slice(2, 6) + "-" + n.slice(6);
-        }
-
+        if (n.length <= 2) return n;
+        if (n.length <= 6) return "(" + n.slice(0, 2) + ") " + n.slice(2);
+        if (n.length <= 10) return "(" + n.slice(0, 2) + ") " + n.slice(2, 6) + "-" + n.slice(6);
         return "(" + n.slice(0, 2) + ") " + n.slice(2, 7) + "-" + n.slice(7);
       }
 
       function maskMoney(value) {
         var n = String(value || "").replace(/\D/g, "");
-
-        if (!n) {
-          return "";
-        }
-
-        return (Number(n) / 100).toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL"
-        });
-      }
-
-      function showStatus(texto) {
-        saveStatus.textContent = texto;
-        saveStatus.classList.add("show");
-
-        setTimeout(function () {
-          saveStatus.classList.remove("show");
-        }, 3800);
-      }
-
-      function salvarLead(callback) {
-        if (saving) {
-          return;
-        }
-
-        saving = true;
-        showStatus("Enviando atendimento...");
-
-        if (!window.PALMER_API || typeof window.PALMER_API.enviarLead !== "function") {
-          saving = false;
-          showStatus("API não carregou. Verifique palmer-api.js.");
-
-          if (callback) {
-            callback();
-          }
-
-          return;
-        }
-
-        window.PALMER_API.enviarLead(dados, {
-          sucesso: function () {
-            saving = false;
-            showStatus("✅ Cadastro enviado para a equipe.");
-
-            if (callback) {
-              callback();
-            }
-          },
-          erro: function (erro) {
-            console.error("Erro ao enviar lead:", erro);
-            saving = false;
-            showStatus("⚠️ Falha ao enviar. Tente novamente.");
-
-            if (callback) {
-              callback();
-            }
-          }
-        });
-      }
-
-      function start() {
-        if (started) {
-          return;
-        }
-
-        started = true;
-        dados.origem = getParam("origem") || getParam("utm_source") || "github-pages";
-        dados.campanha = getParam("campanha") || getParam("utm_campaign") || "sem_campanha";
-
-        bot("Olá! 😊 Seja bem-vindo(a) à <b>Palmer Imóveis</b>.<br><br>Vou te atender de forma rápida. Qual é o seu nome?");
-        renderText(passoWhatsapp, "Digite seu nome", "Ex.: Antonio Barros", "text");
+        if (!n) return "";
+        return (Number(n) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
       }
 
       function passoWhatsapp(nome) {
@@ -755,13 +680,7 @@
 
       function passoCredito(resposta) {
         dados.credito_aprovado = resposta;
-
-        if (resposta === "Sim") {
-          bot("Informe o valor aprovado e se possui entrada. 🏦");
-        } else {
-          bot("Informe o valor de entrada e quanto deseja financiar. 🧾");
-        }
-
+        bot(resposta === "Sim" ? "Informe o valor aprovado e se possui entrada. 🏦" : "Informe o valor de entrada e quanto deseja financiar. 🧾");
         renderText(passoDetalhesPagamento, "Digite os detalhes", "Ex.: Tenho R$ 10 mil de entrada", "text");
       }
 
@@ -876,14 +795,7 @@
             var wpp = dados.whatsapp;
             var origem = dados.origem;
             var campanha = dados.campanha;
-
-            dados = {
-              nome: nome,
-              whatsapp: wpp,
-              origem: origem,
-              campanha: campanha
-            };
-
+            dados = { nome: nome, whatsapp: wpp, origem: origem, campanha: campanha };
             bot("Pedido anterior salvo. Vamos iniciar uma nova solicitação. 🔄");
             bot("O que você deseja agora?");
             renderOptions(["Comprar", "Alugar", "Tirar dúvidas", "Fazer orçamento"], passoDirecionamento);
@@ -903,31 +815,55 @@
         removeOptions();
         setProgress("🏆 Atendimento concluído");
         bot("Pronto! 🎉<br>Suas informações foram registradas. Um corretor da <b>Palmer Imóveis</b> entrará em contato em breve.");
-
         salvarLead(function () {
           showStatus("✅ Cadastro enviado para a equipe.");
         });
       }
 
-      input.addEventListener("input", function () {
-        if (input.dataset.mode === "phone") {
-          input.value = maskPhone(input.value);
+      function showStatus(texto) {
+        saveStatus.textContent = texto;
+        saveStatus.classList.add("show");
+        setTimeout(function () { saveStatus.classList.remove("show"); }, 3800);
+      }
+
+      function salvarLead(callback) {
+        if (saving) return;
+        saving = true;
+        showStatus("Enviando atendimento...");
+
+        if (!APPS_SCRIPT_API_URL || APPS_SCRIPT_API_URL.indexOf("COLE_AQUI") >= 0) {
+          saving = false;
+          showStatus("⚠️ Configure a URL do Web App no HTML.");
+          if (callback) callback();
+          return;
         }
 
-        if (input.dataset.mode === "money") {
-          input.value = maskMoney(input.value);
+        try {
+          var body = new URLSearchParams();
+          body.append('data', JSON.stringify(dados));
+          // Envia também o ID da planilha e a URL do Supabase para o Apps Script, se necessário
+          body.append('spreadsheetId', SPREADSHEET_ID);
+          body.append('supabaseUrl', SUPABASE_URL);
+
+          fetch(APPS_SCRIPT_API_URL, {
+            method: "POST",
+            mode: "cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            body: body.toString()
+          }).then(function (response) {
+            saving = false;
+            if (callback) callback();
+          }).catch(function (err) {
+            console.error("Erro ao salvar lead:", err);
+            saving = false;
+            if (callback) callback();
+          });
+        } catch (e) {
+          console.error(e);
+          saving = false;
+          if (callback) callback();
         }
-      });
-
-      sendBtn.addEventListener("click", submitText);
-
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          submitText();
-        }
-      });
-
-      window.addEventListener("load", start);
+      }
     })();
   </script>
 </body>
