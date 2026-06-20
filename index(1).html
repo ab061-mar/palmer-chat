@@ -431,6 +431,10 @@
       */
       var APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbzqYgi0Ka0aIo4nU_399ozR7dr5sS2KrC4fD45uPfbPoq3fNHO7NG64ayQxqxG7gJikPA/exec";
 
+      // Inserido por solicitação: ID da planilha (Google Sheets) e link do Supabase
+      var SPREADSHEET_ID = "1CBF8UupyUvc8oaJbSHilxbVLt57j0XEJd4l0Ng_tc8w"; // ID da planilha
+      var SUPABASE_URL = "https://rfpepuqgnwxbgminqmfu.supabase.co"; // Link do projeto Supabase
+
       var chat = document.getElementById("chat");
       var progress = document.getElementById("progress");
       var inputArea = document.getElementById("inputArea");
@@ -837,6 +841,9 @@
         try {
           var body = new URLSearchParams();
           body.append('data', JSON.stringify(dados));
+          // Envia também o ID da planilha e a URL do Supabase para o Apps Script, se necessário
+          body.append('spreadsheetId', SPREADSHEET_ID);
+          body.append('supabaseUrl', SUPABASE_URL);
 
           fetch(APPS_SCRIPT_API_URL, {
             method: "POST",
