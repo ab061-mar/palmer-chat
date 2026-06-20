@@ -484,7 +484,7 @@
           .replace(/&/g, "&amp;")
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
+          .replace(/\"/g, "&quot;")
           .replace(/'/g, "&#039;");
       }
 
@@ -835,19 +835,24 @@
         }
 
         try {
+          var body = new URLSearchParams();
+          body.append('data', JSON.stringify(dados));
+
           fetch(APPS_SCRIPT_API_URL, {
             method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify(dados)
-          }).then(function () {
+            mode: "cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            body: body.toString()
+          }).then(function (response) {
             saving = false;
             if (callback) callback();
-          }).catch(function () {
+          }).catch(function (err) {
+            console.error("Erro ao salvar lead:", err);
             saving = false;
             if (callback) callback();
           });
         } catch (e) {
+          console.error(e);
           saving = false;
           if (callback) callback();
         }
