@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Palmer Imóveis</title>
+
+  <style>
+    :root {
+      --green-dark: #075e54;
+      --green-mid: #128c7e;
+      --green-light: #25d366;
+      --bubble-user: #dcf8c6;
+      --bubble-bot: #ffffff;
+      --chat-bg: #efe7dc;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --profile: url("https://i.postimg.cc/d0GjXh1h/Whats-App-Image-2026-06-16-at-15-48-05.jpg");
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      background: var(--chat-bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    button, input {
+      font-family: inherit;
+    }
+
+    .app {
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      background: var(--chat-bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .header {
+      flex: 0 0 auto;
+      background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+      color: #fff;
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      box-shadow: 0 2px 7px rgba(0,0,0,.22);
+      z-index: 5;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .profile-photo {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      border-radius: 50%;
+      background-image: var(--profile);
+      background-size: cover;
+      background-position: center;
+      background-color: #fff;
+      border: 2px solid rgba(255,255,255,.88);
+      box-shadow: 0 3px 12px rgba(0,0,0,.20);
+    }
+
+    .profile-name {
+      font-size: 16px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .profile-status {
+      margin-top: 3px;
+      font-size: 12px;
+      color: rgba(255,255,255,.88);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 0 4px rgba(52,211,153,.18);
+      margin-right: 4px;
+    }
+
+    .chat {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 14px 11px 12px;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(255,255,255,.36) 0 1px, transparent 1px),
+        radial-gradient(circle at 84% 40%, rgba(255,255,255,.30) 0 1px, transparent 1px),
+        linear-gradient(rgba(239,231,220,.94), rgba(239,231,220,.94));
+      background-size: 28px 28px, 36px 36px, auto;
+      scroll-behavior: smooth;
+    }
+
+    .progress {
+      width: fit-content;
+      max-width: 92%;
+      margin: 0 auto 12px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.74);
+      color: #92400e;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .row {
+      display: flex;
+      gap: 7px;
+      margin: 7px 0;
+      align-items: flex-end;
+      animation: fadeUp .18s ease;
+    }
+
+    .row.bot {
+      justify-content: flex-start;
+    }
+
+    .row.user {
+      justify-content: flex-end;
+    }
+
+    .avatar {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      border-radius: 50%;
+      background-image: var(--profile);
+      background-size: cover;
+      background-position: center;
+      background-color: #fff;
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 2px 7px rgba(0,0,0,.12);
+    }
+
+    .bubble {
+      position: relative;
+      max-width: 78%;
+      padding: 9px 10px 17px;
+      border-radius: 13px;
+      line-height: 1.38;
+      font-size: 14px;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      box-shadow: 0 1px 2px rgba(0,0,0,.08);
+    }
+
+    .bot .bubble {
+      background: var(--bubble-bot);
+      border-bottom-left-radius: 4px;
+    }
+
+    .user .bubble {
+      background: var(--bubble-user);
+      border-bottom-right-radius: 4px;
+    }
+
+    .time {
+      position: absolute;
+      right: 8px;
+      bottom: 4px;
+      font-size: 10px;
+      color: rgba(0,0,0,.45);
+      white-space: nowrap;
+    }
+
+    .ticks {
+      color: #34b7f1;
+      font-weight: 900;
+      margin-left: 3px;
+    }
+
+    .typing {
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      margin: 7px 0;
+    }
+
+    .typing-bubble {
+      background: #fff;
+      border-radius: 13px;
+      border-bottom-left-radius: 4px;
+      padding: 10px 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.08);
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #9ca3af;
+      animation: blink 1s infinite;
+    }
+
+    .dot:nth-child(2) { animation-delay: .15s; }
+    .dot:nth-child(3) { animation-delay: .30s; }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: calc(100% - 42px);
+      margin: 8px 0 10px 35px;
+      animation: fadeUp .18s ease;
+    }
+
+    .option {
+      width: 100%;
+      border: 1px solid rgba(18,140,126,.22);
+      background: #fff;
+      color: var(--green-dark);
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .option:after {
+      content: "›";
+      font-size: 22px;
+      color: var(--green-mid);
+      font-weight: 900;
+    }
+
+    .options.disabled .option {
+      opacity: .48;
+      pointer-events: none;
+    }
+
+    .input-area {
+      flex: 0 0 auto;
+      background: #f0f2f5;
+      padding: 8px 8px max(8px, env(safe-area-inset-bottom));
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      border-top: 1px solid rgba(0,0,0,.06);
+    }
+
+    .input-area.hidden {
+      display: none;
+    }
+
+    .emoji {
+      flex: 0 0 28px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      color: #64748b;
+    }
+
+    .input-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input {
+      width: 100%;
+      min-height: 44px;
+      border: none;
+      outline: none;
+      border-radius: 22px;
+      padding: 0 15px;
+      font-size: 14px;
+      color: var(--text);
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+    }
+
+    .hint {
+      padding-left: 12px;
+      font-size: 10px;
+      color: #64748b;
+    }
+
+    .send {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      border: none;
+      border-radius: 50%;
+      background: var(--green-light);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37,211,102,.32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .save-status {
+      display: none;
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: calc(64px + env(safe-area-inset-bottom));
+      padding: 10px 12px;
+      background: rgba(7,94,84,.94);
+      color: #fff;
+      border-radius: 14px;
+      font-size: 13px;
+      text-align: center;
+      z-index: 20;
+      box-shadow: 0 8px 26px rgba(0,0,0,.22);
+    }
+
+    .save-status.show {
+      display: block;
+    }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: .25; transform: translateY(0); }
+      40% { opacity: 1; transform: translateY(-2px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (min-width: 641px) {
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #d8d3ca;
+      }
+
+      .app {
+        width: 420px;
+        height: min(100vh, 760px);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 14px 35px rgba(0,0,0,.16);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+    <header class="header">
+      <div class="profile">
+        <div class="profile-photo"></div>
+        <div>
+          <div class="profile-name">Palmer Imóveis</div>
+          <div class="profile-status"><span class="online-dot"></span>online agora • atendimento imobiliário</div>
+        </div>
+      </div>
+      <div aria-hidden="true">📞</div>
+    </header>
+
+    <section class="chat" id="chat">
+      <div class="progress" id="progress">🌟 Atendimento iniciado</div>
+    </section>
+
+    <section class="input-area" id="inputArea">
+      <div class="emoji">😊</div>
+      <div class="input-wrap">
+        <input class="input" id="userInput" type="text" placeholder="Digite aqui..." autocomplete="off">
+        <div class="hint" id="hint">Ex.: Antonio Barros</div>
+      </div>
+      <button class="send" id="sendBtn" type="button">➤</button>
+    </section>
+
+    <div class="save-status" id="saveStatus">Enviando...</div>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /*
+        IMPORTANTE:
+        Cole aqui a URL do Web App publicado no Apps Script.
+        Use a URL terminada em /exec.
+        O Web App precisa estar implantado como:
+        - Executar como: você
+        - Quem tem acesso: qualquer pessoa
+      */
+      var APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbzqYgi0Ka0aIo4nU_399ozR7dr5sS2KrC4fD45uPfbPoq3fNHO7NG64ayQxqxG7gJikPA/exec";
+
+      var chat = document.getElementById("chat");
+      var progress = document.getElementById("progress");
+      var inputArea = document.getElementById("inputArea");
+      var input = document.getElementById("userInput");
+      var hint = document.getElementById("hint");
+      var sendBtn = document.getElementById("sendBtn");
+      var saveStatus = document.getElementById("saveStatus");
+
+      var dados = {};
+      var currentCallback = null;
+      var saving = false;
+
+      function params() {
+        var out = {};
+        var q = String(location.search || "").replace(/^\?/, "").split("&");
+        for (var i = 0; i < q.length; i++) {
+          if (!q[i]) continue;
+          var p = q[i].split("=");
+          out[decodeURIComponent(p[0] || "")] = decodeURIComponent((p[1] || "").replace(/\+/g, " "));
+        }
+        return out;
+      }
+
+      var urlParams = params();
+      dados.origem = urlParams.origem || urlParams.utm_source || "instagram";
+      dados.campanha = urlParams.campanha || urlParams.utm_campaign || "bio";
+
+      window.addEventListener("load", start);
+      sendBtn.addEventListener("click", submitText);
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") submitText();
+      });
+
+      input.addEventListener("input", function () {
+        if (input.dataset.mode === "phone") input.value = maskPhone(input.value);
+        if (input.dataset.mode === "money") input.value = maskMoney(input.value);
+      });
+
+      function start() {
+        bot("Olá! 😊 Seja bem-vindo(a) à <b>Palmer Imóveis</b>.<br><br>Vou te atender de forma rápida. Qual é o seu nome?");
+        renderText(passoWhatsapp, "Digite seu nome", "Ex.: Antonio Barros", "text");
+      }
+
+      function now() {
+        var d = new Date();
+        return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+      }
+
+      function esc(text) {
+        return String(text == null ? "" : text)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function scrollBottom() {
+        chat.scrollTop = chat.scrollHeight;
+      }
+
+      function showTyping(callback) {
+        var row = document.createElement("div");
+        row.className = "typing";
+        row.innerHTML = '<div class="avatar"></div><div class="typing-bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
+        chat.appendChild(row);
+        scrollBottom();
+
+        setTimeout(function () {
+          if (row.parentNode) row.parentNode.removeChild(row);
+          callback();
+        }, 330);
+      }
+
+      function bot(html) {
+        showTyping(function () {
+          var row = document.createElement("div");
+          row.className = "row bot";
+          row.innerHTML = '<div class="avatar"></div><div class="bubble">' + html + '<span class="time">' + now() + '</span></div>';
+          chat.appendChild(row);
+          scrollBottom();
+        });
+      }
+
+      function user(text) {
+        var row = document.createElement("div");
+        row.className = "row user";
+        row.innerHTML = '<div class="bubble">' + esc(text) + '<span class="time">' + now() + ' <span class="ticks">✓✓</span></span></div>';
+        chat.appendChild(row);
+        scrollBottom();
+      }
+
+      function setProgress(text) {
+        progress.textContent = text;
+      }
+
+      function renderText(callback, placeholder, helper, mode) {
+        removeOptions();
+        currentCallback = callback;
+        inputArea.classList.remove("hidden");
+        input.value = "";
+        input.placeholder = placeholder || "Digite aqui...";
+        input.dataset.mode = mode || "text";
+        hint.textContent = helper || "";
+        setTimeout(function () { input.focus(); }, 50);
+      }
+
+      function submitText() {
+        if (!currentCallback) return;
+        var value = input.value.trim();
+        if (!value) return;
+        currentCallback(value);
+      }
+
+      function renderOptions(options, callback) {
+        currentCallback = null;
+        inputArea.classList.add("hidden");
+        removeOptions();
+
+        var box = document.createElement("div");
+        box.className = "options";
+        box.setAttribute("data-options", "true");
+
+        for (var i = 0; i < options.length; i++) {
+          (function (opt) {
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "option";
+            b.textContent = opt;
+            b.onclick = function () {
+              box.classList.add("disabled");
+              user(opt);
+              callback(opt);
+            };
+            box.appendChild(b);
+          })(options[i]);
+        }
+
+        chat.appendChild(box);
+        scrollBottom();
+      }
+
+      function removeOptions() {
+        var old = chat.querySelectorAll("[data-options='true']");
+        for (var i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
+      }
+
+      function maskPhone(value) {
+        var n = String(value || "").replace(/\D/g, "").slice(0, 11);
+        if (n.length <= 2) return n;
+        if (n.length <= 6) return "(" + n.slice(0, 2) + ") " + n.slice(2);
+        if (n.length <= 10) return "(" + n.slice(0, 2) + ") " + n.slice(2, 6) + "-" + n.slice(6);
+        return "(" + n.slice(0, 2) + ") " + n.slice(2, 7) + "-" + n.slice(7);
+      }
+
+      function maskMoney(value) {
+        var n = String(value || "").replace(/\D/g, "");
+        if (!n) return "";
+        return (Number(n) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+      }
+
+      function passoWhatsapp(nome) {
+        dados.nome = nome;
+        user(nome);
+        setProgress("🌟🌟 Nome registrado");
+        bot("Prazer, <b>" + esc(nome) + "</b>! 📲<br>Agora me informe seu WhatsApp com DDD.");
+        renderText(passoIntencao, "Digite seu WhatsApp", "Ex.: (91) 99999-9999", "phone");
+      }
+
+      function passoIntencao(whatsapp) {
+        dados.whatsapp = whatsapp;
+        user(whatsapp);
+        setProgress("🌟🌟🌟 Contato registrado");
+        bot("Perfeito! Como podemos ajudar você hoje? 👇");
+        renderOptions(["Comprar", "Alugar", "Tirar dúvidas", "Fazer orçamento"], passoDirecionamento);
+      }
+
+      function passoDirecionamento(escolha) {
+        dados.intencao = escolha;
+
+        if (escolha === "Comprar") {
+          bot("Ótimo! 🏡 Qual tipo de imóvel você procura?");
+          renderOptions(["Apartamento em condomínio", "Apartamento em prédio", "Casa no Centro", "Casa no Atalaia", "Casa no Maçarico", "Terreno ou lote"], passoOpcoesCompra);
+        } else if (escolha === "Alugar") {
+          bot("Certo! 🔑 Qual tipo de aluguel você procura?");
+          renderOptions(["Temporada", "Mensal", "Semestral (6 meses)", "Anual"], passoTipoAluguel);
+        } else if (escolha === "Tirar dúvidas") {
+          dados.interesse_compra = "Dúvidas gerais";
+          bot("Claro. 😊 Digite sua dúvida para enviarmos ao corretor.");
+          renderText(passoTextoLivre, "Digite sua dúvida", "Ex.: Quero saber valores e disponibilidade", "text");
+        } else {
+          dados.interesse_compra = "Orçamento";
+          bot("Sem problema. 🧾 Digite o que você deseja orçar.");
+          renderText(passoTextoLivre, "Digite seu orçamento", "Ex.: Casa para temporada no Atalaia", "text");
+        }
+      }
+
+      function passoOpcoesCompra(escolha) {
+        dados.interesse_compra = escolha;
+
+        if (escolha === "Terreno ou lote") {
+          bot("Excelente escolha! 🌿<br>Você tem preferência de <b>área ou localidade em Salinas</b>?");
+          renderText(passoTerrenoLocal, "Digite a área/localidade", "Ex.: Atalaia, Centro, Maçarico, próximo à praia...", "text");
+        } else {
+          bot("Entendi. 👥 Quantas pessoas vão morar ou estar com você?");
+          renderText(passoCriancas, "Digite a quantidade de pessoas", "Ex.: 3 pessoas", "text");
+        }
+      }
+
+      function passoTerrenoLocal(local) {
+        dados.preferencia_area_terreno = local;
+        user(local);
+        bot("Anotado. 💰 Qual valor você pretende investir?");
+        renderText(passoTerrenoValor, "Digite o valor", "Ex.: R$ 36.000,00", "money");
+      }
+
+      function passoTerrenoValor(valor) {
+        dados.valor_desejado = valor;
+        user(valor);
+        bot("E a forma de pagamento seria qual? 👇");
+        renderOptions(["À vista", "Financiado", "Parcelado"], passoTerrenoPagamento);
+      }
+
+      function passoTerrenoPagamento(forma) {
+        dados.forma_pagamento = forma;
+
+        if (forma === "À vista") {
+          bot("Perfeito. 💵 Sendo à vista, como pretende pagar?");
+          renderOptions(["Tudo em dinheiro/PIX/transferência", "Parte em dinheiro e parte financiado", "Outra forma combinada"], passoDetalhePagamentoOpcao);
+        } else if (forma === "Financiado") {
+          bot("Certo. 🏦 Você já tem crédito aprovado?");
+          renderOptions(["Sim", "Não", "Ainda vou verificar"], passoCredito);
+        } else {
+          bot("Como você gostaria de parcelar? 📄");
+          renderText(passoDetalhesPagamento, "Digite os detalhes", "Ex.: entrada + 24 parcelas", "text");
+        }
+      }
+
+      function passoDetalhePagamentoOpcao(opcao) {
+        dados.detalhes_pagamento = opcao;
+        passoAlgoMais();
+      }
+
+      function passoCredito(resposta) {
+        dados.credito_aprovado = resposta;
+        bot(resposta === "Sim" ? "Informe o valor aprovado e se possui entrada. 🏦" : "Informe o valor de entrada e quanto deseja financiar. 🧾");
+        renderText(passoDetalhesPagamento, "Digite os detalhes", "Ex.: Tenho R$ 10 mil de entrada", "text");
+      }
+
+      function passoTipoAluguel(tipo) {
+        dados.tipo_aluguel = tipo;
+
+        if (tipo === "Temporada") {
+          bot("Quais dias você pretende ficar em Salinas? 🌊");
+          renderText(passoDiasTemporada, "Digite os dias", "Ex.: 10 a 14 de julho", "text");
+        } else {
+          bot("Qual valor deseja pagar? 💰");
+          renderText(passoAluguelValor, "Digite o valor", "Ex.: R$ 1.500,00", "money");
+        }
+      }
+
+      function passoDiasTemporada(dias) {
+        dados.dias_temporada = dias;
+        user(dias);
+        bot("Qual valor deseja pagar pela diária? 💰");
+        renderText(passoAluguelValor, "Digite o valor", "Ex.: R$ 500,00", "money");
+      }
+
+      function passoAluguelValor(valor) {
+        dados.valor_desejado = valor;
+        user(valor);
+        bot("Quantas pessoas no total vão estar com você? 👥");
+        renderText(passoCriancas, "Digite a quantidade", "Ex.: 6 pessoas", "text");
+      }
+
+      function passoCriancas(qtd) {
+        dados.quantidade_pessoas = qtd;
+        user(qtd);
+        bot("Tem criança no grupo? 👶");
+        renderOptions(["Sim", "Não"], passoCriancasDetalhes);
+      }
+
+      function passoCriancasDetalhes(resp) {
+        dados.tem_crianca = resp;
+
+        if (resp === "Sim") {
+          bot("Informe a quantidade e idade das crianças.");
+          renderText(passoPetPergunta, "Digite os detalhes", "Ex.: 2 crianças, 5 e 8 anos", "text");
+        } else {
+          passoPetPergunta("");
+        }
+      }
+
+      function passoPetPergunta(detalhes) {
+        if (dados.tem_crianca === "Sim") {
+          dados.detalhes_criancas = detalhes;
+          user(detalhes);
+        }
+
+        bot("Você tem pet? 🐶🐱");
+        renderOptions(["Sim", "Não"], passoPetDetalhes);
+      }
+
+      function passoPetDetalhes(resp) {
+        dados.tem_pet = resp;
+
+        if (resp === "Sim") {
+          bot("Qual raça, tamanho ou peso do pet?");
+          renderText(passoFormaPagamento, "Digite os detalhes", "Ex.: cachorro pequeno, 8 kg", "text");
+        } else {
+          passoFormaPagamento("");
+        }
+      }
+
+      function passoFormaPagamento(detalhesPet) {
+        if (dados.tem_pet === "Sim") {
+          dados.detalhes_pet = detalhesPet;
+          user(detalhesPet);
+        }
+
+        bot("Como pretende fazer o pagamento? 💳");
+        renderOptions(["PIX", "Transferência", "Dinheiro", "Cartão", "Financiamento", "A combinar"], passoFormaPagamentoSelecionada);
+      }
+
+      function passoFormaPagamentoSelecionada(forma) {
+        dados.forma_pagamento = forma;
+        bot("Quer acrescentar algum detalhe sobre o pagamento? 🧾");
+        renderText(passoDetalhesPagamento, "Digite os detalhes", "Ex.: Tenho entrada de R$ 20 mil", "text");
+      }
+
+      function passoDetalhesPagamento(texto) {
+        dados.detalhes_pagamento = texto;
+        user(texto);
+        passoAlgoMais();
+      }
+
+      function passoTextoLivre(texto) {
+        dados.opiniao = texto;
+        user(texto);
+        passoAlgoMais();
+      }
+
+      function passoAlgoMais() {
+        setProgress("✅ Dados principais anotados");
+        bot("Tudo anotado. ✅<br>Deseja acrescentar mais alguma coisa?");
+        renderOptions(["É só isso mesmo", "Dar minha opinião", "Fazer uma nova solicitação"], decisaoAlgoMais);
+      }
+
+      function decisaoAlgoMais(escolha) {
+        if (escolha === "É só isso mesmo") {
+          finalizar();
+        } else if (escolha === "Dar minha opinião") {
+          bot("Pode digitar sua opinião ou observação. 🗣️");
+          renderText(salvarOpiniao, "Digite sua opinião", "Sua mensagem será enviada ao corretor", "text");
+        } else {
+          salvarLead(function () {
+            var nome = dados.nome;
+            var wpp = dados.whatsapp;
+            var origem = dados.origem;
+            var campanha = dados.campanha;
+            dados = { nome: nome, whatsapp: wpp, origem: origem, campanha: campanha };
+            bot("Pedido anterior salvo. Vamos iniciar uma nova solicitação. 🔄");
+            bot("O que você deseja agora?");
+            renderOptions(["Comprar", "Alugar", "Tirar dúvidas", "Fazer orçamento"], passoDirecionamento);
+          });
+        }
+      }
+
+      function salvarOpiniao(texto) {
+        dados.opiniao = texto;
+        user(texto);
+        bot("Obrigado pela sua opinião. 💙");
+        passoAlgoMais();
+      }
+
+      function finalizar() {
+        inputArea.classList.add("hidden");
+        removeOptions();
+        setProgress("🏆 Atendimento concluído");
+        bot("Pronto! 🎉<br>Suas informações foram registradas. Um corretor da <b>Palmer Imóveis</b> entrará em contato em breve.");
+        salvarLead(function () {
+          showStatus("✅ Cadastro enviado para a equipe.");
+        });
+      }
+
+      function showStatus(texto) {
+        saveStatus.textContent = texto;
+        saveStatus.classList.add("show");
+        setTimeout(function () { saveStatus.classList.remove("show"); }, 3800);
+      }
+
+      function salvarLead(callback) {
+        if (saving) return;
+        saving = true;
+        showStatus("Enviando atendimento...");
+
+        if (!APPS_SCRIPT_API_URL || APPS_SCRIPT_API_URL.indexOf("COLE_AQUI") >= 0) {
+          saving = false;
+          showStatus("⚠️ Configure a URL do Web App no HTML.");
+          if (callback) callback();
+          return;
+        }
+
+        try {
+          fetch(APPS_SCRIPT_API_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(dados)
+          }).then(function () {
+            saving = false;
+            if (callback) callback();
+          }).catch(function () {
+            saving = false;
+            if (callback) callback();
+          });
+        } catch (e) {
+          saving = false;
+          if (callback) callback();
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
