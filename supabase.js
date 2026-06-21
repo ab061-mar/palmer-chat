@@ -7,7 +7,7 @@ window.PALMER_SUPABASE = (function () {
 
   var SUPABASE_URL = "https://rfpepuqgnwxbgminqmfu.supabase.co";
 
-  var SUPABASE_ANON_KEY = "";
+  var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJmcGVwdXFnbnd4YmdtaW5xbWZ1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4MzM5NDUsImV4cCI6MjA5NzQwOTk0NX0.qnkWa4P1qZjgdnD4R8n81AuK-B86dtQ01EETQWWMBXI";
 
 
 
