@@ -430,7 +430,8 @@
     <div class="save-status" id="saveStatus">Enviando...</div>
   </main>
 
-  <script src="./palmer-api.js"></script>
+  
+  <script src="./supabase.js"></script>
 
   <script>
     (function () {
@@ -619,43 +620,83 @@
       }
 
       function salvarLead(callback) {
+
         if (saving) {
+
           return;
+
         }
+
+
 
         saving = true;
+
         showStatus("Enviando atendimento...");
 
-        if (!window.PALMER_API || typeof window.PALMER_API.enviarLead !== "function") {
+
+
+        if (!window.PALMER_SUPABASE || typeof window.PALMER_SUPABASE.salvarLead !== "function") {
+
           saving = false;
-          showStatus("API não carregou. Verifique palmer-api.js.");
+
+          showStatus("API Supabase não carregou. Verifique supabase.js.");
+
+
 
           if (callback) {
+
             callback();
+
           }
+
+
 
           return;
+
         }
 
-        window.PALMER_API.enviarLead(dados, {
+
+
+        window.PALMER_SUPABASE.salvarLead(dados, {
+
           sucesso: function () {
+
             saving = false;
-            showStatus("✅ Cadastro enviado para a equipe.");
+
+            showStatus("✅ Cadastro salvo no Supabase.");
+
+
 
             if (callback) {
+
               callback();
+
             }
+
           },
+
           erro: function (erro) {
-            console.error("Erro ao enviar lead:", erro);
+
+            console.error("Erro ao salvar lead no Supabase:", erro);
+
+
+
             saving = false;
-            showStatus("⚠️ Falha ao enviar. Tente novamente.");
+
+            showStatus("⚠️ Falha ao salvar. Tente novamente.");
+
+
 
             if (callback) {
+
               callback();
+
             }
+
           }
+
         });
+
       }
 
       function start() {
